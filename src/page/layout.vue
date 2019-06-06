@@ -135,6 +135,9 @@ export default {
     .el-dropdown-link
       font-size 16px
       color #fff
+      cursor pointer
+  .el-icon-arrow-down
+    font-size 12px
 .el-menu-vertical-demo:not(.el-menu--collapse)
   width 200px
   min-height 400px

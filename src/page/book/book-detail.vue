@@ -68,6 +68,7 @@ import _book from '@/service/book-service.js'
 import _category from '@/service/category-service.js'
 
 export default {
+  inject: ["reload"],
   data () {
     return {
       bookId: this.$route.query.bookId,
@@ -93,9 +94,7 @@ export default {
       }, err => {
         this.$message.error(err)
       })
-      setTimeout(() => {
-        this.$router.go(0)
-      }, 1000)
+      this.reload();
     },
     getBookDetail () {
       var _this = this
