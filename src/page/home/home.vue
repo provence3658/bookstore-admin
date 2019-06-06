@@ -21,7 +21,7 @@ import _user from '@/service/user-service.js'
 import _book from '@/service/book-service.js'
 import _order from '@/service/order-service.js'
 export default {
-  data() {
+  data () {
     return {
       orderNumber: 0,
       userNumber: 0,
@@ -34,19 +34,19 @@ export default {
   methods: {
     getNumber () {
       var _this = this
-      _user.number(res=>{
+      _user.number(res => {
         _this.userNumber = res
-      },err=>{
+      }, err => {
         this.$message.error(err)
       })
-      _book.number(res=>{
+      _book.number(res => {
         _this.bookNumber = res
-      },err=>{
+      }, err => {
         this.$message.error(err)
       })
-      _order.number(res=>{
+      _order.number(res => {
         _this.orderNumber = res
-      },err=>{
+      }, err => {
         this.$message.error(err)
       })
     }
@@ -55,7 +55,7 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.user,.book,.order
+.user, .book, .order
   width 280px
   height 150px
   display inline-block

@@ -20,31 +20,37 @@
     </el-header>
     <el-container>
       <el-aside width="220px">
-        <el-menu default-active="1-4-1" class="el-menu-vertical-demo">
-          <el-menu-item index="1" @click="goToPage('home')">
+        <el-menu default-active="1-4-1"
+                 class="el-menu-vertical-demo">
+          <el-menu-item index="1"
+                        @click="goToPage('/home')">
             <i class="el-icon-s-home"></i>
             <span slot="title">首页</span>
           </el-menu-item>
-          <el-menu-item index="2" @click="goToPage('Book')">
+          <el-menu-item index="2"
+                        @click="goToPage('/book')">
             <i class="el-icon-collection"></i>
             <span slot="title">书籍管理</span>
           </el-menu-item>
-          <el-menu-item index="3" @click="goToPage('Category')">
+          <el-menu-item index="3"
+                        @click="goToPage('/category')">
             <i class="el-icon-s-operation"></i>
-              <span slot="title">品类管理</span>
+            <span slot="title">品类管理</span>
           </el-menu-item>
-          <el-menu-item index="4" @click="goToPage('Order')">
+          <el-menu-item index="4"
+                        @click="goToPage('/order')">
             <i class="el-icon-s-order"></i>
             <span slot="title">订单管理</span>
           </el-menu-item>
-          <el-menu-item index="5" @click="goToPage('User')">
+          <el-menu-item index="5"
+                        @click="goToPage('/user')">
             <i class="el-icon-s-custom"></i>
             <span slot="title">用户列表</span>
           </el-menu-item>
         </el-menu>
       </el-aside>
       <el-main>
-        <router-view/>
+        <router-view v-if="isRouterAlive" />
       </el-main>
     </el-container>
   </el-container>
@@ -55,31 +61,47 @@ import _user from '@/service/user-service.js'
 export default {
   data () {
     return {
-      username:''
+      username: '',
+      isRouterAlive: true
     }
   },
-  mounted() {
+  provide () {
+    return {
+      reload: this.reload
+    }
+  },
+  mounted () {
     this.getUserInfo()
   },
   methods: {
     goToPage (path) {
-      this.$router.push({name: path})
+      if (path === '/category') {
+        this.$router.push({ name: "Category", params: { id: 0 } })
+      } else {
+        this.$router.push({ path: path })
+      }
     },
-    getUserInfo() {
+    getUserInfo () {
       var _this = this
-      _user.getUserInfo(res=>{
+      _user.getUserInfo(res => {
         _this.username = res.username
-      },err=>{
+      }, err => {
         this.$message.error(err)
       })
     },
-    logout() {
+    logout () {
       var _this = this
       // console.log(1)
-      _user.logout(res=>{
+      _user.logout(res => {
         _this.$router.push('/login')
-      },err=>{
+      }, err => {
         this.$message.error(err)
+      })
+    },
+    reload () {
+      this.isRouterAlive = false
+      this.$nextTick(function () {
+        this.isRouterAlive = true
       })
     }
   }
@@ -88,27 +110,26 @@ export default {
 
 <style lang="stylus" scoped>
 .el-header
-  font-size: 22px
-  color: #fff
+  font-size 22px
+  color #fff
   background #409EFF
-  height: 60px
+  height 60px
   line-height 60px
   position relative
   .collapse-btn
-    float: left;
-    cursor: pointer;
+    float left
+    cursor pointer
     padding 0 25px 0 0
   .logo
-    float: left;
-    width: 250px;
+    float left
+    width 250px
   .header-right
     position absolute
     right 10px
     .el-dropdown-link
-      font-size: 16px
-      color: #fff
-.el-menu-vertical-demo:not(.el-menu--collapse) {
-  width: 200px;
-  min-height: 400px;
-}
+      font-size 16px
+      color #fff
+.el-menu-vertical-demo:not(.el-menu--collapse)
+  width 200px
+  min-height 400px
 </style>

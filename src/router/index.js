@@ -18,40 +18,50 @@ export default new Router({
     {
       path: '/',
       component: Layout,
-      children: [{
-        path: 'home',
-        name: 'home',
-        component: Home
-      }, {
-        path: 'book',
-        name: 'Book',
-        component: Book,
-      }, {
-        path: 'book/detail',
-        name: 'BookDetail',
-        component: BookDetail
-      }, {
-        path: 'book/add',
-        name: 'BookAdd',
-        component: BookAdd
-      }, {
-        path: 'category',
-        name: 'Category',
-        component: Category
-      }, {
-        path: 'order',
-        name: 'Order',
-        component: Order
-      }, {
-        path: 'order/detail',
-        name: 'OrderDetail',
-        component: OrderDetail
-      }, {
-        path: 'user',
-        name: 'User',
-        component: User
-      }]
-    }, {
+      children: [
+        {
+          path: 'home',
+          name: 'home',
+          component: Home
+        },
+        {
+          path: 'book',
+          name: 'Book',
+          component: Book
+        },
+        {
+          path: 'book/detail',
+          name: 'BookDetail',
+          component: BookDetail
+        },
+        {
+          path: 'book/add',
+          name: 'BookAdd',
+          component: BookAdd
+        },
+        {
+          path: 'category/:id',
+          name: 'Category',
+          component: Category
+        },
+        {
+          path: 'order',
+          name: 'Order',
+          component: Order
+        },
+        {
+          path: 'order/detail',
+          name: 'OrderDetail',
+          component: OrderDetail
+        },
+        {
+          path: 'user',
+          name: 'User',
+          component: User
+        }
+      ]
+    },
+    {
       path: '/login',
       name: 'Login',
       component: Login
