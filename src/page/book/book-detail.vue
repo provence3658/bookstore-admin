@@ -5,15 +5,15 @@
              :model="bookInfo"
              label-width="80px">
       <el-form-item label="书籍名称">
-        <el-input v-model="bookInfo.name"
-                  disabled></el-input>
+        <div class="text el-input__inner">{{bookInfo.name}}</div>
       </el-form-item>
       <el-form-item label="作者">
-        <el-input v-model="bookInfo.author"
-                  disabled></el-input>
+        <div class="text el-input__inner">{{bookInfo.author}}</div>
       </el-form-item>
       <el-form-item label="价格">
-        <el-input v-model="bookInfo.price"></el-input>
+        <el-input v-model="pointPrice">
+          <template slot="append">元</template>
+        </el-input>
       </el-form-item>
       <el-form-item label="类别">
         <el-select @change="changeParentCategory"
@@ -46,7 +46,9 @@
         </el-select>
       </el-form-item>
       <el-form-item label="库存">
-        <el-input v-model="bookInfo.stock"></el-input>
+        <el-input v-model="bookInfo.stock">
+          <template slot="append">本</template>
+        </el-input>
       </el-form-item>
       <el-form-item label="内容简介">
         <el-input type="textarea"
@@ -55,7 +57,7 @@
       </el-form-item>
       <el-form-item>
         <el-button type="primary"
-                   @click="onSubmit">修改</el-button>
+                   @click="onSubmit">保存</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -138,11 +140,21 @@ export default {
     changeStatus (status) {
       this.bookInfo.status = status === 1 ? 0 : 1
     }
+  },
+  computed: {
+    pointPrice () {
+      var price = this.bookInfo.price
+      if (price != null)
+        return price.toFixed(2)
+      else
+        return ''
+    }
   }
 }
 </script>
 
 <style lang="stylus" scoped>
-.el-input
-  width 50%
+.book-detail
+  .el-input, .text
+    width 50%
 </style>

@@ -29,6 +29,9 @@
       </el-table-column>
       <el-table-column prop="payment"
                        label="订单总价">
+        <template slot-scope="scope">
+          <span>{{scope.row.payment | keepTwoNum}}</span>
+        </template>
       </el-table-column>
       <el-table-column prop="createTime"
                        label="创建时间"
@@ -58,6 +61,12 @@ export default {
     return {
       data: {},
       search: ''
+    }
+  },
+  filters: {
+    keepTwoNum (value) {
+      value = Number(value)
+      return value.toFixed(2)
     }
   },
   mounted () {

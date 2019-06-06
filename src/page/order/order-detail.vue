@@ -1,27 +1,28 @@
 <template>
   <div class="order-detail">
     <h1>订单详情</h1>
+    <el-button v-show="orderInfo.status === 20"
+               class="shipping"
+               type="primary"
+               round
+               @click="deliver(orderInfo.orderNo)">立即发货</el-button>
     <el-form ref="form"
              :model="orderInfo"
              label-width="80px">
       <el-form-item label="订单号">
-        <el-input v-model="orderInfo.orderNo"></el-input>
+        <div class="text">{{orderInfo.orderNo}}</div>
       </el-form-item>
       <el-form-item label="创建时间">
-        <el-input v-model="orderInfo.createTime"></el-input>
+        <div class="text">{{orderInfo.createTime}}</div>
       </el-form-item>
       <el-form-item label="收件人">
-        <el-input v-model="receiverInfo"></el-input>
+        <div class="text">{{receiverInfo}}</div>
       </el-form-item>
       <el-form-item label="订单状态">
-        <el-input v-model="orderInfo.statusDesc"></el-input>
-        <el-button v-show="orderInfo.status === 20"
-                   type="primary"
-                   round
-                   @click="deliver(orderInfo.orderNo)">立即发货</el-button>
+        <div class="text">{{orderInfo.statusDesc}}</div>
       </el-form-item>
       <el-form-item label="订单金额">
-        <el-input v-model="orderInfo.payment"></el-input>
+        <div class="text">￥{{orderInfo.payment|keepTwoNum}}</div>
       </el-form-item>
     </el-form>
     <el-table :data="orderInfo.orderItemVoList"
@@ -37,12 +38,18 @@
       </el-table-column>
       <el-table-column prop="onePrice"
                        label="单价">
+        <template slot-scope="scope">
+          <span>{{scope.row.onePrice | keepTwoNum}}</span>
+        </template>
       </el-table-column>
       <el-table-column prop="quantity"
                        label="数量">
       </el-table-column>
       <el-table-column prop="totalPrice"
                        label="合计">
+        <template slot-scope="scope">
+          <span>{{scope.row.totalPrice | keepTwoNum}}</span>
+        </template>
       </el-table-column>
     </el-table>
   </div>
@@ -54,7 +61,13 @@ export default {
   data () {
     return {
       orderNo: this.$route.query.orderNo,
-      orderInfo: {}
+      orderInfo: {},
+    }
+  },
+  filters: {
+    keepTwoNum (value) {
+      value = Number(value)
+      return value.toFixed(2)
     }
   },
   mounted () {
@@ -105,8 +118,14 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.el-input
-  width 50%
+.order-detail
+  position relative
+  .shipping
+    position absolute
+    top 0
+    right 0
+.text
+  color #606266
 .el-image
   height 100px
   width 80px

@@ -42,7 +42,6 @@ var _mm = {
   },
   doLogin: function() {
     window.location.href = 'http://localhost:8080/#/login'
-    // this.$router.push({ path: '/login', replace: true })
   }
 }
 

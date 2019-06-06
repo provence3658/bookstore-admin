@@ -20,29 +20,29 @@
     </el-header>
     <el-container>
       <el-aside width="220px">
-        <el-menu default-active="1-4-1"
+        <el-menu :default-active="path"
                  class="el-menu-vertical-demo">
-          <el-menu-item index="1"
+          <el-menu-item index="/home"
                         @click="goToPage('/home')">
             <i class="el-icon-s-home"></i>
             <span slot="title">首页</span>
           </el-menu-item>
-          <el-menu-item index="2"
+          <el-menu-item index="/book"
                         @click="goToPage('/book')">
             <i class="el-icon-collection"></i>
             <span slot="title">书籍管理</span>
           </el-menu-item>
-          <el-menu-item index="3"
+          <el-menu-item index="/category"
                         @click="goToPage('/category')">
             <i class="el-icon-s-operation"></i>
             <span slot="title">品类管理</span>
           </el-menu-item>
-          <el-menu-item index="4"
+          <el-menu-item index="/order"
                         @click="goToPage('/order')">
             <i class="el-icon-s-order"></i>
             <span slot="title">订单管理</span>
           </el-menu-item>
-          <el-menu-item index="5"
+          <el-menu-item index="/user"
                         @click="goToPage('/user')">
             <i class="el-icon-s-custom"></i>
             <span slot="title">用户列表</span>
@@ -80,6 +80,7 @@ export default {
       } else {
         this.$router.push({ path: path })
       }
+
     },
     getUserInfo () {
       var _this = this
@@ -91,7 +92,6 @@ export default {
     },
     logout () {
       var _this = this
-      // console.log(1)
       _user.logout(res => {
         _this.$router.push('/login')
       }, err => {
@@ -103,6 +103,12 @@ export default {
       this.$nextTick(function () {
         this.isRouterAlive = true
       })
+    }
+  },
+  computed: {
+    path () {
+      var path = this.$route.path
+      return path.lastIndexOf('/') === 0 ? path : path.substr(0, path.lastIndexOf('/'))
     }
   }
 }

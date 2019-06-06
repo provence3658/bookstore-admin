@@ -40,6 +40,9 @@
       </el-table-column>
       <el-table-column prop="price"
                        label="价格">
+        <template slot-scope="scope">
+          <span>{{scope.row.price | keepTwoNum}}</span>
+        </template>
       </el-table-column>
       <el-table-column prop="statusDesc"
                        label="状态">
@@ -68,6 +71,12 @@ export default {
       data: {},
       search: '',
       searchType: 'id'
+    }
+  },
+  filters: {
+    keepTwoNum (value) {
+      value = Number(value)
+      return value.toFixed(2)
     }
   },
   mounted () {
