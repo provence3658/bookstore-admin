@@ -41,12 +41,10 @@ export default {
               type: "error"
             })
           }
-          // console.log(response)
           _this.imageUrl = response.data.data
           _this.$emit("imgUrl", _this.imageUrl)
         })
         .catch(function (error) {
-          // console.log(error)
           _this.$message.error(error)
         })
     }

@@ -1,7 +1,7 @@
 'use strict'
 
 var conf = {
-  serverHost: 'http://localhost:8088/bookstore_war'
+  serverHost: 'http://localhost:8088/bookstore_war' //后端服务器地址
   // serverHost:''
 }
 var _mm = {
