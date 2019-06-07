@@ -7,11 +7,13 @@
         </el-form-item>
         <el-form-item>
           <el-input placeholder="用户名"
-                    v-model="user.username"></el-input>
+                    v-model="user.username"
+                    @keyup.enter.native="onSubmit"></el-input>
         </el-form-item>
         <el-form-item>
           <el-input placeholder="密码"
                     v-model="user.password"
+                    @keyup.enter.native="onSubmit"
                     show-password></el-input>
         </el-form-item>
         <el-form-item>

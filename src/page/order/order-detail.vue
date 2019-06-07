@@ -1,11 +1,6 @@
 <template>
   <div class="order-detail">
     <h1>订单详情</h1>
-    <el-button v-show="orderInfo.status === 20"
-               class="shipping"
-               type="primary"
-               round
-               @click="deliver(orderInfo.orderNo)">立即发货</el-button>
     <el-form ref="form"
              :model="orderInfo"
              label-width="80px">
@@ -20,6 +15,11 @@
       </el-form-item>
       <el-form-item label="订单状态">
         <div class="text">{{orderInfo.statusDesc}}</div>
+        <el-button v-show="orderInfo.status === 20"
+                   class="shipping"
+                   type="primary"
+                   round
+                   @click="deliver(orderInfo.orderNo)">立即发货</el-button>
       </el-form-item>
       <el-form-item label="订单金额">
         <div class="text">￥{{orderInfo.payment|keepTwoNum}}</div>
@@ -58,6 +58,7 @@
 <script>
 import _order from '@/service/order-service.js'
 export default {
+  inject: ['reload'],
   data () {
     return {
       orderNo: this.$route.query.orderNo,
@@ -99,9 +100,7 @@ export default {
       }, err => {
         this.$message.error(err)
       })
-      setTimeout(() => {
-        this.$router.go(0)
-      }, 1000)
+      this.reload()
     }
   },
   computed: {
@@ -123,7 +122,7 @@ export default {
   .shipping
     position absolute
     top 0
-    right 0
+    left 20%
 .text
   color #606266
 .el-image

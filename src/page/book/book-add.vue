@@ -11,7 +11,9 @@
         <el-input v-model="bookInfo.author"></el-input>
       </el-form-item>
       <el-form-item label="价格">
-        <el-input v-model="bookInfo.price"></el-input>
+        <el-input v-model="bookInfo.price">
+          <template slot="append">元</template>
+        </el-input>
       </el-form-item>
       <el-form-item label="类别">
         <el-select @change="changeParentCategory"
@@ -35,7 +37,9 @@
         </el-select>
       </el-form-item>
       <el-form-item label="库存">
-        <el-input v-model="bookInfo.stock"></el-input>
+        <el-input v-model="bookInfo.stock">
+          <template slot="append">本</template>
+        </el-input>
       </el-form-item>
       <el-form-item label="图片">
         <upload-image v-on:imgUrl="getImage"></upload-image>

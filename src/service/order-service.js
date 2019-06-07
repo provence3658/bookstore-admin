@@ -11,16 +11,6 @@ var _order = {
       error: reject
     })
   },
-  queryOrderPayStatus: function(orderNo, resolve, reject) {
-    _mm.request({
-      url: _mm.getServerUrl('/order/query_order_pay_status.do'),
-      data: {
-        orderNo: orderNo
-      },
-      success: resolve,
-      error: reject
-    })
-  },
   search: function(listParam, resolve, reject) {
     _mm.request({
       url: _mm.getServerUrl('/manage/order/search.do'),

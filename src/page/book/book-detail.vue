@@ -1,6 +1,9 @@
 <template>
   <div class="book-detail">
     <h1>书籍详情</h1>
+    <img class="el-image"
+         :src="bookInfo.image">
+
     <el-form ref="form"
              :model="bookInfo"
              label-width="80px">
@@ -88,7 +91,6 @@ export default {
     onSubmit () {
       var _this = this
       this.bookInfo.categoryId = this.category
-      // console.log(this.bookInfo)
       _book.saveBookDetail(this.bookInfo, res => {
         this.$message.success(res)
       }, err => {
@@ -99,10 +101,10 @@ export default {
     getBookDetail () {
       var _this = this
       _book.getBookDetail(this.bookId, res => {
-        // console.log(res)
         _this.bookInfo = res
         _this.category = res.categoryId
         _this.getParentId(res.categoryId)
+        console.log(_this.bookInfo)
       }, err => {
         this.$message.error(err)
       })
@@ -138,6 +140,9 @@ export default {
     },
     changeStatus (status) {
       this.bookInfo.status = status === 1 ? 0 : 1
+    },
+    getImage (image) {
+      this.bookInfo.image = image;
     }
   },
   computed: {
@@ -154,6 +159,11 @@ export default {
 
 <style lang="stylus" scoped>
 .book-detail
+  position relative
   .el-input, .text
-    width 50%
+    width 40%
+  .el-image
+    width 180px
+    position absolute
+    left 60%
 </style>

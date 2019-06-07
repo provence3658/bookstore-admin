@@ -36,7 +36,7 @@
       </el-table-column>
       <el-table-column prop="name"
                        label="书名"
-                       width="360">
+                       width="240">
       </el-table-column>
       <el-table-column prop="price"
                        label="价格">
@@ -50,8 +50,16 @@
       <el-table-column prop="handle"
                        label="操作">
         <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)"
-                     type="text">查看&编辑</el-button>
+          <el-button size="mini"
+                     @click="handleEdit(scope.row)">编辑</el-button>
+          <el-button size="mini"
+                     type="danger"
+                     @click="handleDelete(scope.row)"
+                     v-show="scope.row.status===1">下架</el-button>
+          <el-button size="mini"
+                     type="success"
+                     @click="handleDelete(scope.row)"
+                     v-show="scope.row.status===0">上架</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -66,6 +74,7 @@
 <script>
 import _book from '@/service/book-service.js'
 export default {
+  inject: ['reload'],
   data () {
     return {
       data: {},
@@ -88,13 +97,12 @@ export default {
       _book.getBookList({
         pageNum: page
       }, res => {
-        // console.log(res)
         _this.data = res
       }, err => {
-        this.$message.error(err)
+        _this.$message.error(err)
       })
     },
-    handleClick (row) {
+    handleEdit (row) {
       this.$router.push({ path: '/book/detail', query: { bookId: row.id } })
     },
     handleCurrentChange (currentPage) {
@@ -124,7 +132,16 @@ export default {
           this.$message.error(err)
         })
       }
-
+    },
+    handleDelete (row) {
+      var status = row.status === 0 ? 1 : 0
+      var _this = this
+      _book.setSaleStatus(row.id, status, res => {
+        _this.$message.success(res)
+      }, err => {
+        _this.$message.error(err)
+      })
+      this.reload()
     }
   }
 }

@@ -56,6 +56,17 @@ var _book = {
       success: resolve,
       error: reject
     })
+  },
+  setSaleStatus: function(bookId, status, resolve, reject) {
+    _mm.request({
+      url: _mm.getServerUrl('/manage/book/set_sale_status.do'),
+      data: {
+        bookId: bookId,
+        status: status
+      },
+      success: resolve,
+      error: reject
+    })
   }
 }
 module.exports = _book
