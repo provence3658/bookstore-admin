@@ -40,6 +40,16 @@ var _category = {
       success: resolve,
       error: reject
     })
+  },
+  getCategoryName: function(categoryId, resolve, reject) {
+    _mm.request({
+      url: _mm.getServerUrl('/category/get_name.do'),
+      data: {
+        categoryId: categoryId
+      },
+      success: resolve,
+      error: reject
+    })
   }
 }
 module.exports = _category

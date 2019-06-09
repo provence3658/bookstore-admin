@@ -25,7 +25,8 @@ export default {
       let formData = new FormData()
       formData.append("upload_file", content.file)
       let config = {
-        "Content-Type": "multipart/form-data"
+        "Content-Type": "multipart/form-data",
+        withCredentials: true
       }
       let _this = this
       this.$axios

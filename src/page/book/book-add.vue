@@ -63,6 +63,7 @@ import _category from "@/service/category-service.js";
 import UploadImage from "./upload.vue";
 
 export default {
+  inject: ['reload'],
   data () {
     return {
       bookInfo: {},
@@ -88,12 +89,13 @@ export default {
         this.bookInfo,
         res => {
           this.$message.success(res);
-          _this.clearInfo();
+          // _this.clearInfo();
         },
         err => {
           this.$message.error(err);
         }
       );
+      this.reload()
     },
     getCategory (parentId) {
       var _this = this;
@@ -118,12 +120,6 @@ export default {
     },
     changeCategory () {
       this.bookInfo.categoryId = this.category;
-    },
-    clearInfo () {
-      this.bookInfo = {};
-      this.category = "";
-      this.parentCategory = "";
-      this.hasParentCategory = false;
     },
     getImage (image) {
       this.bookInfo.image = image;

@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import _category from "@/service/category-service.js";
+import _category from "@/service/category-service.js"
 export default {
   inject: ["reload"],
   data () {
@@ -38,42 +38,43 @@ export default {
       data: [],
       categoryId: this.$route.params.id,
       parentIdDesc: ""
-    };
+    }
   },
   mounted () {
-    this.getCategoryList(this.categoryId);
+    this.getCategoryList(this.categoryId)
   },
   methods: {
     getCategoryList (categoryId) {
-      var _this = this;
+      var _this = this
+      this.getParentName(categoryId)
       _category.getCategoryList(
         categoryId,
         res => {
-          _this.data = res;
+          _this.data = res
         },
         err => {
-          this.$message.error(err);
+          this.$message.error(err)
         }
-      );
+      )
     },
     handleClick (row) {
-      var _this = this;
+      var _this = this
       this.$prompt("请更改品类名称", "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
         .then(({ value }) => {
-          _this.updateCategoryName(row.id, value);
+          _this.updateCategoryName(row.id, value)
         })
         .catch(() => {
           this.$message({
             type: "info",
             message: "取消输入"
-          });
-        });
+          })
+        })
     },
     updateCategoryName (id, value) {
-      var _this = this;
+      var _this = this
       _category.updateCategoryName(
         {
           categoryId: id,
@@ -83,40 +84,40 @@ export default {
           this.$message({
             type: "success",
             message: "更新品类名称成功"
-          });
+          })
         },
         err => {
-          this.$message.error(err);
+          this.$message.error(err)
         }
-      );
-      this.reload();
+      )
+      this.reload()
     },
     getChildren (row) {
-      this.parentIdDesc = row.name;
-      this.$router.push({ name: "Category", params: { id: row.id } });
-      this.getCategoryList(row.id);
-      this.categoryId = row.id;
+      // this.parentIdDesc = row.name
+      this.$router.push({ name: "Category", params: { id: row.id } })
+      this.getCategoryList(row.id)
+      this.categoryId = row.id
     },
     addCategoryBtn () {
-      var _this = this;
-      var text = this.parentIdDesc === "" ? "根节点" : this.parentIdDesc;
+      var _this = this
+      var text = this.parentIdDesc === "" ? "根节点" : this.parentIdDesc
 
       this.$prompt(`当前为${text}--请输入新的品类名称`, "提示", {
         confirmButtonText: "确定",
         cancelButtonText: "取消"
       })
         .then(({ value }) => {
-          _this.addCategoryName(value);
+          _this.addCategoryName(value)
         })
         .catch(() => {
           this.$message({
             type: "info",
             message: "取消输入"
-          });
-        });
+          })
+        })
     },
     addCategoryName (value) {
-      var _this = this;
+      var _this = this
       _category.addCategory(
         {
           categoryName: value,
@@ -126,23 +127,39 @@ export default {
           this.$message({
             type: "success",
             message: res
-          });
-          _this.reload();
+          })
         },
         err => {
-          this.$message.error(err);
+          this.$message.error(err)
         }
-      );
+      )
+      this.reload()
+    },
+    getParentName (categoryId) {
+      var _this = this
+      if (categoryId === '0') {
+        this.parentIdDesc = '根节点'
+      } else {
+        _category.getCategoryName(
+          categoryId,
+          res => {
+            _this.parentIdDesc = res
+          },
+          err => {
+            _this.$message.error(err)
+          }
+        )
+      }
     }
   },
   watch: {
     $route (to, from) {
-      console.log(to);
-      this.getCategoryList(to.params.id);
+      // console.log(to)
+      this.getCategoryList(to.params.id)
     },
     deep: true
   }
-};
+}
 </script>
 
 <style lang="stylus" scoped>
